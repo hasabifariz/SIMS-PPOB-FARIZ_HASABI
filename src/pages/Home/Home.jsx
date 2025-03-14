@@ -43,12 +43,12 @@ const Home = () => {
   });
 
   return (
-    <div className='min-h-screen pt-20 md:pt-35'>
+    <div className='min-h-screen pt-20 md:pt-30'>
 
       <BalanceBar />
 
       {/* Layanan  */}
-      <div className='flex flex-wrap items-center mt-20 gap-10 px-10 md:px-50'>
+      <div className='flex flex-wrap items-center mt-20 gap-10 px-10 md:px-20 lg:px-50'>
         {
           dataLayanan?.data?.map((item) => {
             return (
@@ -62,7 +62,7 @@ const Home = () => {
       </div>
 
       {/* Promo */}
-      <div className='mt-20 md:mt-40 gap-10 px-10 md:px-50'>
+      <div className='mt-20 md:mt-30 gap-10 px-10 md:px-20 lg:px-50'>
         <p className='font-semibold'>Temukan promo menarik</p>
         <div
           ref={carouselRef}

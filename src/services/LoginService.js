@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://take-home-test-api.nutech-integrasi.com/";
+const BASE_URL = "https://take-home-test-api.nutech-integrasi.com";
 export const login = async (body) => {
   const response = await axios.post(`${BASE_URL}/login`, body);
   return response.data;

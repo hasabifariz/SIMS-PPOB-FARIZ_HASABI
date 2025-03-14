@@ -4,8 +4,10 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar';
+import Account from './pages/Account/Account';
 
 function App() {
+
   const routes = [
     {
       path: '/',
@@ -15,12 +17,12 @@ function App() {
     {
       path: '/login',
       element: <Login />,
-      title: 'Login | HIS PPOB'
+      title: 'Login'
     },
     {
       path: '/register',
       element: <Register />,
-      title: 'Register | HIS PPOB'
+      title: 'Register'
     },
     {
       path: '/home',
@@ -29,7 +31,16 @@ function App() {
           <Home />
         </ProtectedRoute>
       ),
-      title: 'Home | My Website',
+      title: 'Home',
+    },
+    {
+      path: '/akun',
+      element: (
+        <ProtectedRoute>
+          <Account />
+        </ProtectedRoute>
+      ),
+      title: 'Akun',
     },
   ];
 
@@ -42,7 +53,7 @@ function App() {
 
   useEffect(() => {
     const currentRoute = routes.find(route => route.path === location.pathname);
-    document.title = currentRoute?.title || 'HIS PPOB';
+    document.title = "SIMS PPOB-Fariz Hasabi | " +currentRoute?.title || 'HIS PPOB';
   }, [location.pathname, routes]);
 
   return (

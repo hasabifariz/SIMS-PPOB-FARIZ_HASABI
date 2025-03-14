@@ -19,15 +19,15 @@ const BalanceBar = () => {
   });
 
   return (
-    <div className='grid grid-cols-12 gap-2 px-10 md:px-50'>
-      <div className='col-span-12 md:col-start-1 md:col-end-6 flex flex-col justify-between py-4'>
-        <img src={PhotoProfile} alt="" className='w-20 h-20' />
-        <div>
+    <div className='grid grid-cols-12 gap-2 px-10 md:px-20 lg:px-50'>
+      <div className='col-span-12 lg:col-start-1 lg:col-end-6 flex flex-col justify-center items-center lg:justify-between lg:items-start py-4'>
+        <img src={PhotoProfile} alt="" className='w-30 h-30 lg:w-25 lg:h-25' />
+        <div className='w-full'>
           <p className='text-2xl mt-5'>Selamat datang,</p>
           <p className='text-4xl font-bold'>{dataProfile?.data?.first_name} {dataProfile?.data?.last_name}</p>
         </div>
       </div>
-      <div className="col-span-12 md:col-start-6 md:col-end-13 relative">
+      <div className="col-span-12 lg:col-start-6 lg:col-end-13 relative">
         <img src={BGSaldo} alt="" className=" w-full h-full md:h-[200px] md:w-[800px]" />
         <div className='absolute top-2 md:top-6 left-5 md:left-10 text-white z-10 md:space-y-4 space-y-0.5'>
           <p className='text-sm md:text-xl lg:text-2xl font-semibold'>
@@ -37,7 +37,7 @@ const BalanceBar = () => {
             Rp {showBalance ? dataBalance?.data?.balance : "•••••••"}
           </p>
         </div>
-        <div className='absolute bottom-1 md:bottom-8.75 left-5 md:left-10 text-white hover:text-gray-400 z-10 cursor-pointer hidden md:block' onClick={() => setShowBalance(!showBalance)}>
+        <div className='absolute bottom-1 md:bottom-12.75 left-5 md:left-10 text-white hover:text-gray-400 z-10 cursor-pointer hidden md:block' onClick={() => setShowBalance(!showBalance)}>
           <p className='text-sm md:text-xl'>Lihat Saldo</p>
         </div>
       </div>
