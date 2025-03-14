@@ -4,6 +4,7 @@ import { getBalance } from '../services/TransactionService';
 import { useQuery } from '@tanstack/react-query';
 import PhotoProfile from '../../src/assets/Profile Photo.png'
 import BGSaldo from '../../src/assets/Background Saldo.png'
+import { rupiahFormatter } from '../utils/rupiahFormatter,js';
 
 const BalanceBar = () => {
   const [showBalance, setShowBalance] = useState(false)
@@ -21,24 +22,25 @@ const BalanceBar = () => {
   return (
     <div className='grid grid-cols-12 gap-2 px-10 md:px-20 lg:px-50'>
       <div className='col-span-12 lg:col-start-1 lg:col-end-6 flex flex-col justify-center items-center lg:justify-between lg:items-start py-4'>
-        <img src={PhotoProfile} alt="" className='w-30 h-30 lg:w-25 lg:h-25' />
+        <div className="avatar">
+          <div className="w-24 rounded-full">
+            <img src={(dataProfile?.data?.profile_image?.split("/").pop() === "null" ? PhotoProfile : dataProfile?.data?.profile_image)} />
+          </div>
+        </div>
         <div className='w-full'>
-          <p className='text-2xl mt-5'>Selamat datang,</p>
-          <p className='text-4xl font-bold'>{dataProfile?.data?.first_name} {dataProfile?.data?.last_name}</p>
+          <p className='md:text-2xl lg:text-3xl mt-5'>Selamat datang,</p>
+          <p className='text-xl md:text-5xl lg:text-6xl font-bold'>{dataProfile?.data?.first_name} {dataProfile?.data?.last_name}</p>
         </div>
       </div>
-      <div className="col-span-12 lg:col-start-6 lg:col-end-13 relative">
-        <img src={BGSaldo} alt="" className=" w-full h-full md:h-[200px] md:w-[800px]" />
-        <div className='absolute top-2 md:top-6 left-5 md:left-10 text-white z-10 md:space-y-4 space-y-0.5'>
-          <p className='text-sm md:text-xl lg:text-2xl font-semibold'>
-            Saldo anda
-          </p>
-          <p className='text-xl md:text-4xl lg:text-5xl font-bold'>
-            Rp {showBalance ? dataBalance?.data?.balance : "•••••••"}
-          </p>
-        </div>
-        <div className='absolute bottom-1 md:bottom-12.75 left-5 md:left-10 text-white hover:text-gray-400 z-10 cursor-pointer hidden md:block' onClick={() => setShowBalance(!showBalance)}>
-          <p className='text-sm md:text-xl'>Lihat Saldo</p>
+      <div className='col-span-12 lg:col-start-6 lg:col-end-13 bg-cover bg-center bg-no-repeat md:h-[250px] rounded-2xl' style={{ backgroundImage: `url(${BGSaldo})` }}>
+        <div className="grid grid-cols-2 md:grid-cols-1 items-center gap-2 md:gap-9 p-2 md:p-7 md:pl-10">
+          <div className='md:space-y-8'>
+            <p className="text-xs md:text-xl lg:text-2xl font-semibold text-white">Saldo anda</p>
+            <p className="text-xl md:text-5xl lg:text-6xl font-bold text-white">{showBalance ? rupiahFormatter(dataBalance?.data?.balance) : "Rp •••••••"}</p>
+          </div>
+          <div className="text-white hover:text-gray-400 cursor-pointer" onClick={() => setShowBalance(!showBalance)}>
+            <p className="text-xs text-right md:text-left md:text-xl">Lihat Saldo</p>
+          </div>
         </div>
       </div>
     </div>

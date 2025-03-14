@@ -2,5 +2,8 @@
 @plugin "daisyui" {
   themes: light --default
 }
+:root {
+  --font-family: "Inter", sans-serif;
+}
 
 

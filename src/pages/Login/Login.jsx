@@ -19,16 +19,15 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(loginSchema) });
 
   const navigate = useNavigate()
-  
+
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (res) => {
-      showToast("Berhasil Login!", 'success')
       localStorage.setItem("token", res.data.token)
       localStorage.setItem("isAuthenticated", true)
-      setTimeout(() => {
-        navigate('/home');
-      }, 2000);
+      showToast("Berhasil Login!", "success", "bottom-left", () => {
+        navigate("/home");
+      });
     },
     onError: (error) => {
       console.error("Login Failed:", error);
@@ -36,7 +35,6 @@ const Login = () => {
     },
   });
   const onSubmit = (data) => {
-    console.log("🚀 ~ onSubmit ~ data:", data)
     mutation.mutate(data);
   };
 
@@ -63,7 +61,7 @@ const Login = () => {
               Masuk atau buat akun untuk memulai
             </h2>
 
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 w-full mt-10'>
+            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 w-full mt-10' onKeyDown={(e) => e.key === "Enter" && handleSubmit(onSubmit)()} >
               <div>
                 <label className="input w-full">
                   <svg width="20" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
@@ -104,7 +102,7 @@ const Login = () => {
           </div>
         </main>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </section >
   )
 }

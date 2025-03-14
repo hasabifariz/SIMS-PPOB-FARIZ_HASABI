@@ -23,10 +23,9 @@ const Register = () => {
   const mutation = useMutation({
     mutationFn: registration,
     onSuccess: () => {
-      showToast('Berhasil mendaftarkan akun!', 'success')
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      showToast("Berhasil mendaftarkan akun!", "success", "bottom-left", () => {
+        navigate("/login");
+      });
     },
     onError: (error) => {
       console.error("Login Failed:", error);

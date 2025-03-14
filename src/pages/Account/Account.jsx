@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 
 const Account = () => {
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("")
   const [isEdit, setIsEdit] = useState(false)
   const [formData, setFormData] = useState({
     first_name: "",
@@ -47,10 +48,9 @@ const Account = () => {
   const mutation = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
-      showToast("Update Profile Berhasil!", "success");
-      setTimeout(() => {
+      showToast("Update Profile Berhasil!", "success", "bottom-left", () => {
         navigate("/home");
-      }, 2000);
+      });
     },
     onError: (error) => {
       console.error("Update Failed:", error);
@@ -62,50 +62,53 @@ const Account = () => {
     mutationFn: updatePhotoProfile,
     onSuccess: () => {
       showToast("Foto profil berhasil diperbarui!", "success");
-      refetch(); // Refresh profile data
     },
     onError: (error) => {
+      console.log("🚀 ~ Account ~ error:", error)
       showToast(error?.response?.data?.message || "Gagal mengupdate foto!", "error");
     },
   });
 
-
-  const onSubmit = (data) => {
-    console.log("🚀 ~ onSubmit ~ data:", data)
-    mutation.mutate(data);
-  };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file);
+      if (file.size > 100 * 1024) {
+        showToast("Ukuran gambar maksimal 100KB!", "error");
+        return;
+      }
 
+      setImagePreview(URL.createObjectURL(file));
+      setImage(file);
+    }
+  };
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+    if (image) {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", image);
       imageMutation.mutate(formData);
     }
   };
 
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("isAuthenticated");
-    showToast("Berhasil Logout!", 'success')
-    setTimeout(() => {
-      navigate('/login');
-    }, 2000);
+    showToast("Berhasil Logout!", "success", "bottom-left", () => {
+      navigate("/login");
+    });
   }
 
 
   return (
     <div className="flex flex-col items-center gap-4 min-h-screen pt-20 md:pt-30 px-10 md:px-20 lg:px-50">
-      {/* Avatar Preview */}
       <label htmlFor="avatarInput" className="relative cursor-pointer">
         <img
-          src={dataProfile?.data?.profile_image?.split("/").pop() === 'null' ? PhotoProfile : dataProfile?.data?.profile_image}
+          src={imagePreview || (dataProfile?.data?.profile_image?.split("/").pop() === "null" ? PhotoProfile : dataProfile?.data?.profile_image)}
           alt="Avatar"
           className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
         />
-        {/* Edit Icon */}
         <div className="absolute bottom-2 right-2 bg-white p-1 rounded-full shadow-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -150,13 +153,16 @@ const Account = () => {
           <label htmlFor="first_name" className="block text-sm font-medium">
             Nama Depan
           </label>
-          <input
-            {...register("first_name")}
-            id="first_name"
-            placeholder="Nama depan"
-            disabled={!isEdit}
-            className="input w-full md:w-[600px]"
-          />
+          <label className="input w-full">
+            <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+            <input
+              {...register("first_name")}
+              id="first_name"
+              placeholder="Nama depan"
+              disabled={!isEdit}
+              className="input w-full md:w-[600px]"
+            />
+          </label>
           {errors.first_name && <p className="text-red-500 text-xs">{errors.first_name.message}</p>}
         </div>
 
@@ -164,13 +170,16 @@ const Account = () => {
           <label htmlFor="last_name" className="block text-sm font-medium">
             Nama Belakang
           </label>
-          <input
-            {...register("last_name")}
-            id="last_name"
-            placeholder="Nama belakang"
-            disabled={!isEdit}
-            className="input w-full md:w-[600px]"
-          />
+          <label className="input w-full">
+            <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></g></svg>
+            <input
+              {...register("last_name")}
+              id="last_name"
+              placeholder="Nama belakang"
+              disabled={!isEdit}
+              className="input w-full md:w-[600px]"
+            />
+          </label>
           {errors.last_name && <p className="text-red-500 text-xs">{errors.last_name.message}</p>}
         </div>
         {isEdit && (

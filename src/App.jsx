@@ -5,6 +5,8 @@ import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar';
 import Account from './pages/Account/Account';
+import Transaction from './pages/Transaction/transaction';
+import Topup from './pages/Topup/Topup';
 
 function App() {
 
@@ -41,6 +43,24 @@ function App() {
         </ProtectedRoute>
       ),
       title: 'Akun',
+    },
+    {
+      path: '/transaction',
+      element: (
+        <ProtectedRoute>
+          <Transaction />
+        </ProtectedRoute>
+      ),
+      title: 'Transaksi',
+    },
+    {
+      path: '/topup',
+      element: (
+        <ProtectedRoute>
+          <Topup />
+        </ProtectedRoute>
+      ),
+      title: 'Transaksi',
     },
   ];
 

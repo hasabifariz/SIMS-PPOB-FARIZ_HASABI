@@ -19,3 +19,24 @@ export const getBalance = async () => {
     throw error;
   }
 };
+
+export const getHistory = async (params) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/transaction/history`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
+      params: params
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAuthenticated");
+
+      window.location.href = "/login";
+    }
+    throw error;
+  }
+};
+
