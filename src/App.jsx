@@ -5,7 +5,7 @@ import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar';
 import Account from './pages/Account/Account';
-import Transaction from './pages/Transaction/transaction';
+import Transaction from './pages/Transaction/Transaction';
 import Topup from './pages/Topup/Topup';
 import NotFound from './pages/NotFound';
 import Pembayaran from './pages/Pembayaran/Pembayaran';
