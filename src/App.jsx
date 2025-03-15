@@ -7,6 +7,8 @@ import Navbar from './components/Navbar';
 import Account from './pages/Account/Account';
 import Transaction from './pages/Transaction/transaction';
 import Topup from './pages/Topup/Topup';
+import NotFound from './pages/NotFound';
+import Pembayaran from './pages/Pembayaran/Pembayaran';
 
 function App() {
 
@@ -62,6 +64,20 @@ function App() {
       ),
       title: 'Transaksi',
     },
+    {
+      path: '/payment',
+      element: (
+        <ProtectedRoute>
+          <Pembayaran />
+        </ProtectedRoute>
+      ),
+      title: 'Payment',
+    },
+    {
+      path: '*',
+      element: <NotFound />,
+      title: 'Page Not Found',
+    },
   ];
 
   function ProtectedRoute({ children }) {
@@ -73,12 +89,12 @@ function App() {
 
   useEffect(() => {
     const currentRoute = routes.find(route => route.path === location.pathname);
-    document.title = "SIMS PPOB-Fariz Hasabi | " +currentRoute?.title || 'HIS PPOB';
+    document.title = "SIMS PPOB-Fariz Hasabi | " + currentRoute?.title || 'HIS PPOB';
   }, [location.pathname, routes]);
 
   return (
     <>
-      <Navbar />
+      <Navbar routes={routes} />
       <Routes>
         {routes.map((item) => (
           <Route key={item.path} path={item.path} element={item.element} />

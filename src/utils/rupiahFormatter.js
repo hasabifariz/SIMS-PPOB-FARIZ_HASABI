@@ -3,5 +3,5 @@ export const rupiahFormatter = (amount) => {
     style: "currency",
     currency: "IDR",
     minimumFractionDigits: 0,
-  }).format(amount);
+  }).format(Number(amount));
 };

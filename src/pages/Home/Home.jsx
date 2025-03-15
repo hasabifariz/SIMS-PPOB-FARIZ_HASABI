@@ -4,9 +4,11 @@ import { layanan, promo } from '../../services/LayananService';
 import { useRef } from 'react';
 import BalanceBar from '../../components/BalanceBar';
 import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const carouselRef = useRef(null);
+  const navigate = useNavigate()
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -43,6 +45,14 @@ const Home = () => {
     queryFn: promo,
   });
 
+  const handlePaymentLayanan = (layanan) => {
+    navigate(`/payment`, {
+      state: {
+        layanan: layanan
+      }
+    })
+  }
+
   return (
     <div className='min-h-screen pt-20 md:pt-30'>
 
@@ -59,7 +69,7 @@ const Home = () => {
         ) : (
           dataLayanan?.data?.map((item) => {
             return (
-              <div key={item?.service_code} className='cursor-pointer w-13 h-13 md:w-17 md:h-17 hover:scale-110 tooltip' data-tip={item?.service_name} >
+              <div key={item?.service_code} className='cursor-pointer w-13 h-13 md:w-17 md:h-17 hover:scale-110 tooltip' data-tip={item?.service_name} onClick={() => handlePaymentLayanan(item)}>
                 <img src={item?.service_icon} alt={item?.service_code} className='w-full h-full object-cover' />
                 <p className='text-center text-gray-600 font-semibold truncate text-sm md:text-md px-1'>{item?.service_name}</p>
               </div>
