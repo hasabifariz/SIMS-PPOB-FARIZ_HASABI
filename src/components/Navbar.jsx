@@ -2,11 +2,11 @@ import React from 'react'
 import Logo from '../assets/Logo.png'
 import { Link, useLocation } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({routes}) => {
 
   const location = useLocation();
 
-  if (location.pathname === "/login" || location.pathname === "/register") {
+  if ((location.pathname === "/login" || location.pathname === "/register") || !routes.some((route) => route.path === location.pathname)) {
     return null;
   }
 
